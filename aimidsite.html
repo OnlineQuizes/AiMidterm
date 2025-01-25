@@ -1,0 +1,1096 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Mid</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background-color: #f5f5f5;
+        }
+
+        .navbar {
+            background-color: #ffffff;
+            padding: 1rem 2rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .nav-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #2563eb;
+            text-decoration: none;
+        }
+
+        .quiz-container {
+            max-width: 800px;
+            margin: 6rem auto 2rem auto;
+            padding: 2rem;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .controls {
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .question {
+            margin-bottom: 2rem;
+        }
+
+        .question h3 {
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+            color: #1f2937;
+        }
+
+        .options label {
+            display: block;
+            margin-bottom: 1rem;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 0.8rem 2rem;
+            background-color: #2563eb;
+            color: white;
+            text-decoration: none;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            cursor: pointer;
+            margin: 0.5rem;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn:hover {
+            background-color: #1e40af;
+        }
+
+        .answer-box {
+            margin-top: 1rem;
+            padding: 1rem;
+            border-radius: 5px;
+            display: none;
+        }
+
+        .correct {
+            background-color: #d4edda;
+            border: 1px solid #c3e6cb;
+            color: #155724;
+        }
+
+        .incorrect {
+            background-color: #f8d7da;
+            border: 1px solid #f5c6cb;
+            color: #721c24;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-content">
+            <a href="#" class="logo">AI Mid</a>
+            <div>
+                <button class="btn" onclick="resetQuiz()">Reset</button>
+                <button class="btn" onclick="showAllAnswers()">Show All Answers</button>
+                <button class="btn" onclick="hideAllAnswers()">Hide All Answers</button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="quiz-container">
+        <div class="header">
+        </div>
+
+        <!-- Questions Start Here -->
+        <div class="question">
+            <h3>1. What is the field of computer science that focuses on creating systems capable of tasks like learning and reasoning?</h3>
+            <div class="options">
+                <label><input type="radio" name="q1" value="a"> a) Agent</label>
+                <label><input type="radio" name="q1" value="b"> b) Artificial Intelligence</label>
+                <label><input type="radio" name="q1" value="c"> c) Data Science</label>
+                <label><input type="radio" name="q1" value="d"> d) Robotics</label>
+            </div>
+            <div class="answer-box" id="answer1" data-correct-answer="b) Artificial Intelligence">Correct Answer: b) Artificial Intelligence</div>
+        </div>
+
+        <div class="question">
+            <h3>2. What is the primary role of an agent in artificial intelligence?</h3>
+            <div class="options">
+                <label><input type="radio" name="q2" value="a"> a) To collect data for machine learning models</label>
+                <label><input type="radio" name="q2" value="b"> b) To perceive the environment and act upon it</label>
+                <label><input type="radio" name="q2" value="c"> c) To replace human reasoning</label>
+                <label><input type="radio" name="q2" value="d"> d) To store information</label>
+            </div>
+            <div class="answer-box" id="answer2" data-correct-answer="b) To perceive the environment and act upon it">Correct Answer: b) To perceive the environment and act upon it</div>
+        </div>
+
+        <div class="question">
+            <h3>3. Which of the following describes a Model-Based Reflex Agent?</h3>
+            <div class="options">
+                <label><input type="radio" name="q3" value="a"> a) It reacts only to the current percept.</label>
+                <label><input type="radio" name="q3" value="b"> b) It maintains an internal state for decision-making.</label>
+                <label><input type="radio" name="q3" value="c"> c) It evaluates future states to achieve goals.</label>
+                <label><input type="radio" name="q3" value="d"> d) It uses a utility function to measure desirability.</label>
+            </div>
+            <div class="answer-box" id="answer3" data-correct-answer="b) It maintains an internal state for decision-making">Correct Answer: b) It maintains an internal state for decision-making</div>
+        </div>
+
+        <div class="question">
+            <h3>4. Which characteristic of an environment means the agent has complete access to the state of the environment?</h3>
+            <div class="options">
+                <label><input type="radio" name="q4" value="a"> a) Stochastic</label>
+                <label><input type="radio" name="q4" value="b"> b) Partially Observable</label>
+                <label><input type="radio" name="q4" value="c"> c) Fully Observable</label>
+                <label><input type="radio" name="q4" value="d"> d) Episodic</label>
+            </div>
+            <div class="answer-box" id="answer4" data-correct-answer="c) Fully Observable">Correct Answer: c) Fully Observable</div>
+        </div>
+
+        <div class="question">
+            <h3>5. What are the components of a Learning Agent?</h3>
+            <div class="options">
+                <label><input type="radio" name="q5" value="a"> a) Sensors, Actuators, Goals, Utility</label>
+                <label><input type="radio" name="q5" value="b"> b) Percepts, Critic, Actions, Goals</label>
+                <label><input type="radio" name="q5" value="c"> c) Learning Element, Performance Element, Critic, Problem Generator</label>
+                <label><input type="radio" name="q5" value="d"> d) PEAS, Reflex, Goals, Learning</label>
+            </div>
+            <div class="answer-box" id="answer5" data-correct-answer="c) Learning Element, Performance Element, Critic, Problem Generator">Correct Answer: c) Learning Element, Performance Element, Critic, Problem Generator</div>
+        </div>
+
+        <!-- Question 6 -->
+<div class="question">
+    <h3>6. In the PEAS framework for a self-driving car, what is an example of an actuator?</h3>
+    <div class="options">
+        <label><input type="radio" name="q6" value="a"> a) Cameras</label>
+        <label><input type="radio" name="q6" value="b"> b) Steering Wheel</label>
+        <label><input type="radio" name="q6" value="c"> c) GPS</label>
+        <label><input type="radio" name="q6" value="d"> d) Weather Conditions</label>
+    </div>
+    <div class="answer-box" id="answer6" data-correct-answer="b) Steering Wheel">Correct Answer: b) Steering Wheel</div>
+</div>
+
+<!-- Question 7 -->
+<div class="question">
+    <h3>7. In the PEAS framework for a delivery drone, what is an example of a performance measure?</h3>
+    <div class="options">
+        <label><input type="radio" name="q7" value="a"> a) Battery level</label>
+        <label><input type="radio" name="q7" value="b"> b) Delivery speed and accuracy</label>
+        <label><input type="radio" name="q7" value="c"> c) Camera for obstacle detection</label>
+        <label><input type="radio" name="q7" value="d"> d) GPS for navigation</label>
+    </div>
+    <div class="answer-box" id="answer7" data-correct-answer="b) Delivery speed and accuracy">Correct Answer: b) Delivery speed and accuracy</div>
+</div>
+
+<!-- Question 8 -->
+<div class="question">
+    <h3>8. In the PEAS framework for an automated weather station, what is an example of an environment?</h3>
+    <div class="options">
+        <label><input type="radio" name="q8" value="a"> a) Rain gauge</label>
+        <label><input type="radio" name="q8" value="b"> b) Wind speed</label>
+        <label><input type="radio" name="q8" value="c"> c) Weather conditions</label>
+        <label><input type="radio" name="q8" value="d"> d) Temperature sensor</label>
+    </div>
+    <div class="answer-box" id="answer8" data-correct-answer="c) Weather conditions">Correct Answer: c) Weather conditions</div>
+</div>
+
+<!-- Question 9 -->
+<div class="question">
+    <h3>9. In the PEAS framework for a smart home thermostat, what is an example of a sensor?</h3>
+    <div class="options">
+        <label><input type="radio" name="q9" value="a"> a) Heating element</label>
+        <label><input type="radio" name="q9" value="b"> b) Temperature detector</label>
+        <label><input type="radio" name="q9" value="c"> c) Air conditioning unit</label>
+        <label><input type="radio" name="q9" value="d"> d) User interface</label>
+    </div>
+    <div class="answer-box" id="answer9" data-correct-answer="b) Temperature detector">Correct Answer: b) Temperature detector</div>
+</div>
+
+<!-- Question 10 -->
+<div class="question">
+    <h3>10. What is a feature of a Utility-Based Agent?</h3>
+    <div class="options">
+        <label><input type="radio" name="q10" value="a"> a) Acts based only on the current percept</label>
+        <label><input type="radio" name="q10" value="b"> b) Uses a utility function to maximize state desirability</label>
+        <label><input type="radio" name="q10" value="c"> c) Operates without goals</label>
+        <label><input type="radio" name="q10" value="d"> d) Does not interact with the environment</label>
+    </div>
+    <div class="answer-box" id="answer10" data-correct-answer="b) Uses a utility function to maximize state desirability">Correct Answer: b) Uses a utility function to maximize state desirability</div>
+</div>
+
+<!-- Question 11 -->
+<div class="question">
+    <h3>11. Which environment type is stochastic?</h3>
+    <div class="options">
+        <label><input type="radio" name="q11" value="a"> a) A maze-solving robot with fixed paths</label>
+        <label><input type="radio" name="q11" value="b"> b) A poker game with random outcomes</label>
+        <label><input type="radio" name="q11" value="c"> c) A chess game where all moves are predetermined</label>
+        <label><input type="radio" name="q11" value="d"> d) A digital image classification system</label>
+    </div>
+    <div class="answer-box" id="answer11" data-correct-answer="b) A poker game with random outcomes">Correct Answer: b) A poker game with random outcomes</div>
+</div>
+
+<!-- Question 12 -->
+<div class="question">
+    <h3>12. Which agent type is least effective in a partially observable environment?</h3>
+    <div class="options">
+        <label><input type="radio" name="q12" value="a"> a) Simple Reflex Agent</label>
+        <label><input type="radio" name="q12" value="b"> b) Model-Based Reflex Agent</label>
+        <label><input type="radio" name="q12" value="c"> c) Goal-Based Agent</label>
+        <label><input type="radio" name="q12" value="d"> d) Utility-Based Agent</label>
+    </div>
+    <div class="answer-box" id="answer12" data-correct-answer="a) Simple Reflex Agent">Correct Answer: a) Simple Reflex Agent</div>
+</div>
+
+<!-- Question 13 -->
+<div class="question">
+    <h3>13. What does the "P" in the PEAS framework stand for?</h3>
+    <div class="options">
+        <label><input type="radio" name="q13" value="a"> a) Perception</label>
+        <label><input type="radio" name="q13" value="b"> b) Performance Measure</label>
+        <label><input type="radio" name="q13" value="c"> c) Problem Generator</label>
+        <label><input type="radio" name="q13" value="d"> d) Programming</label>
+    </div>
+    <div class="answer-box" id="answer13" data-correct-answer="b) Performance Measure">Correct Answer: b) Performance Measure</div>
+</div>
+
+<!-- Question 14 -->
+<div class="question">
+    <h3>14. Which environment type is static?</h3>
+    <div class="options">
+        <label><input type="radio" name="q14" value="a"> a) A real-time strategy game</label>
+        <label><input type="radio" name="q14" value="b"> b) A chessboard during a match</label>
+        <label><input type="radio" name="q14" value="c"> c) Weather simulations</label>
+        <label><input type="radio" name="q14" value="d"> d) Traffic monitoring in real-time</label>
+    </div>
+    <div class="answer-box" id="answer14" data-correct-answer="b) A chessboard during a match">Correct Answer: b) A chessboard during a match</div>
+</div>
+
+<!-- Question 15 -->
+<div class="question">
+    <h3>15. An agent receives inputs from the environment through actuators.</h3>
+    <div class="options">
+        <label><input type="radio" name="q15" value="a"> a) True</label>
+        <label><input type="radio" name="q15" value="b"> b) False</label>
+    </div>
+    <div class="answer-box" id="answer15" data-correct-answer="b) False">Correct Answer: b) False</div>
+</div>
+
+<!-- Question 16 -->
+<div class="question">
+    <h3>16. A deterministic environment has randomness in how it evolves.</h3>
+    <div class="options">
+        <label><input type="radio" name="q16" value="a"> a) True</label>
+        <label><input type="radio" name="q16" value="b"> b) False</label>
+    </div>
+    <div class="answer-box" id="answer16" data-correct-answer="b) False">Correct Answer: b) False</div>
+</div>
+
+<!-- Question 17 -->
+<div class="question">
+    <h3>17. A self-driving car is an example of a Utility-Based Agent.</h3>
+    <div class="options">
+        <label><input type="radio" name="q17" value="a"> a) True</label>
+        <label><input type="radio" name="q17" value="b"> b) False</label>
+    </div>
+    <div class="answer-box" id="answer17" data-correct-answer="a) True">Correct Answer: a) True</div>
+</div>
+
+<!-- Question 18 -->
+<div class="question">
+    <h3>18. A Simple Reflex Agent uses condition-action rules to decide actions.</h3>
+    <div class="options">
+        <label><input type="radio" name="q18" value="a"> a) True</label>
+        <label><input type="radio" name="q18" value="b"> b) False</label>
+    </div>
+    <div class="answer-box" id="answer18" data-correct-answer="a) True">Correct Answer: a) True</div>
+</div>
+
+<!-- Question 19 -->
+<div class="question">
+    <h3>19. The PEAS framework includes Sensors, Actuators, Environment, and Goals.</h3>
+    <div class="options">
+        <label><input type="radio" name="q19" value="a"> a) True</label>
+        <label><input type="radio" name="q19" value="b"> b) False</label>
+    </div>
+    <div class="answer-box" id="answer19" data-correct-answer="a) True">Correct Answer: a) True</div>
+</div>
+
+<!-- Question 20 -->
+<div class="question">
+    <h3>20. The PEAS framework includes Sensors, Actuators, Environment, and Goals.</h3>
+    <div class="options">
+        <label><input type="radio" name="q20" value="a"> a) True</label>
+        <label><input type="radio" name="q20" value="b"> b) False</label>
+    </div>
+    <div class="answer-box" id="answer20" data-correct-answer="a) True">Correct Answer: a) True</div>
+</div>
+
+	<!-- Question 21 -->
+<div class="question">
+    <h3>21. In a partially observable environment, the agent has access to complete information.</h3>
+    <div class="options">
+        <label><input type="radio" name="q21" value="a"> a) True</label>
+        <label><input type="radio" name="q21" value="b"> b) False</label>
+    </div>
+    <div class="answer-box" id="answer21" data-correct-answer="b) False">Correct Answer: b) False</div>
+</div>
+
+<!-- Question 22 -->
+<div class="question">
+    <h3>22. A learning agent includes a component that provides feedback on performance.</h3>
+    <div class="options">
+        <label><input type="radio" name="q22" value="a"> a) True</label>
+        <label><input type="radio" name="q22" value="b"> b) False</label>
+    </div>
+    <div class="answer-box" id="answer22" data-correct-answer="a) True">Correct Answer: a) True</div>
+</div>
+
+<!-- Question 23 -->
+<div class="question">
+    <h3>23. Stochastic environments are unpredictable due to randomness.</h3>
+    <div class="options">
+        <label><input type="radio" name="q23" value="a"> a) True</label>
+        <label><input type="radio" name="q23" value="b"> b) False</label>
+    </div>
+    <div class="answer-box" id="answer23" data-correct-answer="a) True">Correct Answer: a) True</div>
+</div>
+
+<!-- Question 24 -->
+<div class="question">
+    <h3>24. What is the primary goal of automation?</h3>
+    <div class="options">
+        <label><input type="radio" name="q24" value="a"> a) To replace technology with manual labor</label>
+        <label><input type="radio" name="q24" value="b"> b) To minimize human intervention and maximize output</label>
+        <label><input type="radio" name="q24" value="c"> c) To create jobs in technical fields</label>
+        <label><input type="radio" name="q24" value="d"> d) To increase production time</label>
+    </div>
+    <div class="answer-box" id="answer24" data-correct-answer="b) To minimize human intervention and maximize output">Correct Answer: b) To minimize human intervention and maximize output</div>
+</div>
+
+<!-- Question 25 -->
+<div class="question">
+    <h3>25. Which type of automation is best suited for repetitive, high-volume tasks?</h3>
+    <div class="options">
+        <label><input type="radio" name="q25" value="a"> a) Fixed Automation</label>
+        <label><input type="radio" name="q25" value="b"> b) Flexible Automation</label>
+        <label><input type="radio" name="q25" value="c"> c) Programmable Automation</label>
+        <label><input type="radio" name="q25" value="d"> d) Cognitive Automation</label>
+    </div>
+    <div class="answer-box" id="answer25" data-correct-answer="a) Fixed Automation">Correct Answer: a) Fixed Automation</div>
+</div>
+
+<!-- Question 26 -->
+<div class="question">
+    <h3>26. What is an example of Cognitive Automation?</h3>
+    <div class="options">
+        <label><input type="radio" name="q26" value="a"> a) Assembly lines in manufacturing</label>
+        <label><input type="radio" name="q26" value="b"> b) Automated guided vehicles in warehouses</label>
+        <label><input type="radio" name="q26" value="c"> c) Virtual assistants like chatbots</label>
+        <label><input type="radio" name="q26" value="d"> d) Reprogrammable industrial robots</label>
+    </div>
+    <div class="answer-box" id="answer26" data-correct-answer="c) Virtual assistants like chatbots">Correct Answer: c) Virtual assistants like chatbots</div>
+</div>
+
+<!-- Question 27 -->
+<div class="question">
+    <h3>27. What is NOT an advantage of automation?</h3>
+    <div class="options">
+        <label><input type="radio" name="q27" value="a"> a) Improved productivity</label>
+        <label><input type="radio" name="q27" value="b"> b) High setup cost</label>
+        <label><input type="radio" name="q27" value="c"> c) Enhanced quality</label>
+        <label><input type="radio" name="q27" value="d"> d) Resource optimization</label>
+    </div>
+    <div class="answer-box" id="answer27" data-correct-answer="b) High setup cost">Correct Answer: b) High setup cost</div>
+</div>
+
+<!-- Question 28 -->
+<div class="question">
+    <h3>28. What is a challenge of automation?</h3>
+    <div class="options">
+        <label><input type="radio" name="q28" value="a"> a) Job displacement</label>
+        <label><input type="radio" name="q28" value="b"> b) High initial investment</label>
+        <label><input type="radio" name="q28" value="c"> c) Ethical concerns</label>
+        <label><input type="radio" name="q28" value="d"> d) All of the above</label>
+    </div>
+    <div class="answer-box" id="answer28" data-correct-answer="d) All of the above">Correct Answer: d) All of the above</div>
+</div>
+
+<!-- Question 29 -->
+<div class="question">
+    <h3>29. What is the role of the "Perception and Sensing" feature in intelligent agents?</h3>
+    <div class="options">
+        <label><input type="radio" name="q29" value="a"> a) To execute trades in financial systems</label>
+        <label><input type="radio" name="q29" value="b"> b) To collect real-time data from the environment</label>
+        <label><input type="radio" name="q29" value="c"> c) To map out goals for automation</label>
+        <label><input type="radio" name="q29" value="d"> d) To eliminate human interaction</label>
+    </div>
+    <div class="answer-box" id="answer29" data-correct-answer="b) To collect real-time data from the environment">Correct Answer: b) To collect real-time data from the environment</div>
+</div>
+
+<!-- Question 30 -->
+<div class="question">
+    <h3>30. Which of the following is an example of intelligent agents in real-world applications?</h3>
+    <div class="options">
+        <label><input type="radio" name="q30" value="a"> a) Smart Grids optimizing energy distribution</label>
+        <label><input type="radio" name="q30" value="b"> b) Manual trading platforms</label>
+        <label><input type="radio" name="q30" value="c"> c) Static assembly lines</label>
+        <label><input type="radio" name="q30" value="d"> d) Human-only diagnostic processes</label>
+    </div>
+    <div class="answer-box" id="answer30" data-correct-answer="a) Smart Grids optimizing energy distribution">Correct Answer: a) Smart Grids optimizing energy distribution</div>
+</div>
+
+<!-- Question 31 -->
+<div class="question">
+    <h3>31. Automation reduces the need for human involvement in repetitive tasks.</h3>
+    <div class="options">
+        <label><input type="radio" name="q31" value="a"> a) True</label>
+        <label><input type="radio" name="q31" value="b"> b) False</label>
+    </div>
+    <div class="answer-box" id="answer31" data-correct-answer="a) True">Correct Answer: a) True</div>
+</div>
+
+<!-- Question 32 -->
+<div class="question">
+    <h3>32. Fixed automation can dynamically adapt to changing conditions.</h3>
+    <div class="options">
+        <label><input type="radio" name="q32" value="a"> a) True</label>
+        <label><input type="radio" name="q32" value="b"> b) False</label>
+    </div>
+    <div class="answer-box" id="answer32" data-correct-answer="b) False">Correct Answer: b) False</div>
+</div>
+
+<!-- Question 33 -->
+<div class="question">
+    <h3>33. Cognitive automation uses AI to handle tasks that require decision-making.</h3>
+    <div class="options">
+        <label><input type="radio" name="q33" value="a"> a) True</label>
+        <label><input type="radio" name="q33" value="b"> b) False</label>
+    </div>
+    <div class="answer-box" id="answer33" data-correct-answer="a) True">Correct Answer: a) True</div>
+</div>
+
+<!-- Question 34 -->
+<div class="question">
+    <h3>34. A major challenge of automation is its inability to optimize resource usage.</h3>
+    <div class="options">
+        <label><input type="radio" name="q34" value="a"> a) True</label>
+        <label><input type="radio" name="q34" value="b"> b) False</label>
+    </div>
+    <div class="answer-box" id="answer34" data-correct-answer="b) False">Correct Answer: b) False</div>
+</div>
+
+<!-- Question 35 -->
+<div class="question">
+    <h3>35. Intelligent agents rely on pre-programmed responses and cannot adapt to changes.</h3>
+    <div class="options">
+        <label><input type="radio" name="q35" value="a"> a) True</label>
+        <label><input type="radio" name="q35" value="b"> b) False</label>
+    </div>
+    <div class="answer-box" id="answer35" data-correct-answer="b) False">Correct Answer: b) False</div>
+</div>
+
+	<!-- Question 36 -->
+<div class="question">
+    <h3>36. Goal-Based Agents prioritize achieving predefined goals when making decisions.</h3>
+    <div class="options">
+        <label><input type="radio" name="q36" value="a"> a) True</label>
+        <label><input type="radio" name="q36" value="b"> b) False</label>
+    </div>
+    <div class="answer-box" id="answer36" data-correct-answer="a) True">Correct Answer: a) True</div>
+</div>
+
+<!-- Question 37 -->
+<div class="question">
+    <h3>37. Learning agents improve over time by interacting with the environment.</h3>
+    <div class="options">
+        <label><input type="radio" name="q37" value="a"> a) True</label>
+        <label><input type="radio" name="q37" value="b"> b) False</label>
+    </div>
+    <div class="answer-box" id="answer37" data-correct-answer="a) True">Correct Answer: a) True</div>
+</div>
+
+<!-- Question 38 -->
+<div class="question">
+    <h3>38. Autonomous vehicles rely on intelligent agents for real-time decision-making.</h3>
+    <div class="options">
+        <label><input type="radio" name="q38" value="a"> a) True</label>
+        <label><input type="radio" name="q38" value="b"> b) False</label>
+    </div>
+    <div class="answer-box" id="answer38" data-correct-answer="a) True">Correct Answer: a) True</div>
+</div>
+
+<!-- Question 39 -->
+<div class="question">
+    <h3>39. Flexible automation cannot be reprogrammed for different tasks.</h3>
+    <div class="options">
+        <label><input type="radio" name="q39" value="a"> a) True</label>
+        <label><input type="radio" name="q39" value="b"> b) False</label>
+    </div>
+    <div class="answer-box" id="answer39" data-correct-answer="b) False">Correct Answer: b) False</div>
+</div>
+
+<!-- Question 40 -->
+<div class="question">
+    <h3>40. What is the primary role of search in AI?</h3>
+    <div class="options">
+        <label><input type="radio" name="q40" value="a"> a) To store data in knowledge bases</label>
+        <label><input type="radio" name="q40" value="b"> b) To explore solutions systematically and make decisions</label>
+        <label><input type="radio" name="q40" value="c"> c) To increase manual problem-solving efficiency</label>
+        <label><input type="radio" name="q40" value="d"> d) To reduce computational resources</label>
+    </div>
+    <div class="answer-box" id="answer40" data-correct-answer="b) To explore solutions systematically and make decisions">Correct Answer: b) To explore solutions systematically and make decisions</div>
+</div>
+
+<!-- Question 41 -->
+<div class="question">
+    <h3>41. Which type of search uses no additional information about the solution?</h3>
+    <div class="options">
+        <label><input type="radio" name="q41" value="a"> a) Heuristic Search</label>
+        <label><input type="radio" name="q41" value="b"> b) Uninformed Search</label>
+        <label><input type="radio" name="q41" value="c"> c) Stochastic Search</label>
+        <label><input type="radio" name="q41" value="d"> d) Gradient Descent</label>
+    </div>
+    <div class="answer-box" id="answer41" data-correct-answer="b) Uninformed Search">Correct Answer: b) Uninformed Search</div>
+</div>
+
+<!-- Question 42 -->
+<div class="question">
+    <h3>42. What is an example of heuristic search?</h3>
+    <div class="options">
+        <label><input type="radio" name="q42" value="a"> a) Exhaustive search in puzzles</label>
+        <label><input type="radio" name="q42" value="b"> b) Using A* algorithm for pathfinding</label>
+        <label><input type="radio" name="q42" value="c"> c) Random exploration of unknown environments</label>
+        <label><input type="radio" name="q42" value="d"> d) Backtracking without information</label>
+    </div>
+    <div class="answer-box" id="answer42" data-correct-answer="b) Using A* algorithm for pathfinding">Correct Answer: b) Using A* algorithm for pathfinding</div>
+</div>
+
+<!-- Question 43 -->
+<div class="question">
+    <h3>43. What is NOT an advantage of heuristic search?</h3>
+    <div class="options">
+        <label><input type="radio" name="q43" value="a"> a) Faster than uninformed search</label>
+        <label><input type="radio" name="q43" value="b"> b) Optimized for large state spaces</label>
+        <label><input type="radio" name="q43" value="c"> c) Requires no additional domain knowledge</label>
+        <label><input type="radio" name="q43" value="d"> d) Effective in navigation tasks</label>
+    </div>
+    <div class="answer-box" id="answer43" data-correct-answer="c) Requires no additional domain knowledge">Correct Answer: c) Requires no additional domain knowledge</div>
+</div>
+
+<!-- Question 44 -->
+<div class="question">
+    <h3>44. What is the purpose of planning algorithms in AI?</h3>
+    <div class="options">
+        <label><input type="radio" name="q44" value="a"> a) To store predefined responses</label>
+        <label><input type="radio" name="q44" value="b"> b) To find a sequence of actions to achieve goals</label>
+        <label><input type="radio" name="q44" value="c"> c) To randomly navigate the environment</label>
+        <label><input type="radio" name="q44" value="d"> d) To automate static processes</label>
+    </div>
+    <div class="answer-box" id="answer44" data-correct-answer="b) To find a sequence of actions to achieve goals">Correct Answer: b) To find a sequence of actions to achieve goals</div>
+</div>
+
+<!-- Question 45 -->
+<div class="question">
+    <h3>45. What is NOT a challenge that AI search addresses?</h3>
+    <div class="options">
+        <label><input type="radio" name="q45" value="a"> a) Handling incomplete information</label>
+        <label><input type="radio" name="q45" value="b"> b) Dealing with uncertainty</label>
+        <label><input type="radio" name="q45" value="c"> c) Optimizing resource utilization</label>
+        <label><input type="radio" name="q45" value="d"> d) Reducing search complexity in large state spaces</label>
+    </div>
+    <div class="answer-box" id="answer45" data-correct-answer="c) Optimizing resource utilization">Correct Answer: c) Optimizing resource utilization</div>
+</div>
+
+<!-- Question 46 -->
+<div class="question">
+    <h3>46. Which core AI concept involves searching for logical proofs or inferences?</h3>
+    <div class="options">
+        <label><input type="radio" name="q46" value="a"> a) Robotics</label>
+        <label><input type="radio" name="q46" value="b"> b) Natural Language Processing</label>
+        <label><input type="radio" name="q46" value="c"> c) Reasoning and Inference</label>
+        <label><input type="radio" name="q46" value="d"> d) Generative AI</label>
+    </div>
+    <div class="answer-box" id="answer46" data-correct-answer="c) Reasoning and Inference">Correct Answer: c) Reasoning and Inference</div>
+</div>
+
+<!-- Question 47 -->
+<div class="question">
+    <h3>47. Search is a fundamental mechanism in Artificial Intelligence.</h3>
+    <div class="options">
+        <label><input type="radio" name="q47" value="a"> a) True</label>
+        <label><input type="radio" name="q47" value="b"> b) False</label>
+    </div>
+    <div class="answer-box" id="answer47" data-correct-answer="a) True">Correct Answer: a) True</div>
+</div>
+
+<!-- Question 48 -->
+<div class="question">
+    <h3>48. Heuristic search does not use domain-specific knowledge.</h3>
+    <div class="options">
+        <label><input type="radio" name="q48" value="a"> a) True</label>
+        <label><input type="radio" name="q48" value="b"> b) False</label>
+    </div>
+    <div class="answer-box" id="answer48" data-correct-answer="b) False">Correct Answer: b) False</div>
+</div>
+
+<!-- Question 49 -->
+<div class="question">
+    <h3>49. Large state spaces are solved using advanced techniques like pruning and heuristics.</h3>
+    <div class="options">
+        <label><input type="radio" name="q49" value="a"> a) True</label>
+        <label><input type="radio" name="q49" value="b"> b) False</label>
+    </div>
+    <div class="answer-box" id="answer49" data-correct-answer="a) True">Correct Answer: a) True</div>
+</div>
+
+<!-- Question 50 -->
+<div class="question">
+    <h3>50. What is the goal of a search problem in computer science?</h3>
+    <div class="options">
+        <label><input type="radio" name="q50" value="a"> a) To store data efficiently</label>
+        <label><input type="radio" name="q50" value="b"> b) To find a solution within a space of possible solutions</label>
+        <label><input type="radio" name="q50" value="c"> c) To create new algorithms for computation</label>
+        <label><input type="radio" name="q50" value="d"> d) To minimize hardware usage</label>
+    </div>
+    <div class="answer-box" id="answer50" data-correct-answer="b) To find a solution within a space of possible solutions">Correct Answer: b) To find a solution within a space of possible solutions</div>
+</div>
+
+<!-- Question 51 -->
+<div class="question">
+    <h3>51. Which of the following is an example of a state space?</h3>
+    <div class="options">
+        <label><input type="radio" name="q51" value="a"> a) The shortest path between two cities</label>
+        <label><input type="radio" name="q51" value="b"> b) All possible board positions in a chess game</label>
+        <label><input type="radio" name="q51" value="c"> c) The initial configuration of a Rubik's Cube</label>
+        <label><input type="radio" name="q51" value="d"> d) A single goal state</label>
+    </div>
+    <div class="answer-box" id="answer51" data-correct-answer="b) All possible board positions in a chess game">Correct Answer: b) All possible board positions in a chess game</div>
+</div>
+
+<!-- Question 52 -->
+<div class="question">
+    <h3>52. What defines the starting point of a search problem?</h3>
+    <div class="options">
+        <label><input type="radio" name="q52" value="a"> a) Goal State</label>
+        <label><input type="radio" name="q52" value="b"> b) Path Cost</label>
+        <label><input type="radio" name="q52" value="c"> c) Initial State</label>
+        <label><input type="radio" name="q52" value="d"> d) Actions</label>
+    </div>
+    <div class="answer-box" id="answer52" data-correct-answer="c) Initial State">Correct Answer: c) Initial State</div>
+</div>
+
+<!-- Question 53 -->
+<div class="question">
+    <h3>53. Which component of a search problem involves transitioning between states?</h3>
+    <div class="options">
+        <label><input type="radio" name="q53" value="a"> a) Path Cost</label>
+        <label><input type="radio" name="q53" value="b"> b) Actions</label>
+        <label><input type="radio" name="q53" value="c"> c) Goal State</label>
+        <label><input type="radio" name="q53" value="d"> d) Optimization</label>
+    </div>
+    <div class="answer-box" id="answer53" data-correct-answer="b) Actions">Correct Answer: b) Actions</div>
+</div>
+
+<!-- Question 54 -->
+<div class="question">
+    <h3>54. Which type of search deals with infinite or continuous spaces?</h3>
+    <div class="options">
+        <label><input type="radio" name="q54" value="a"> a) Discrete Search</label>
+        <label><input type="radio" name="q54" value="b"> b) Stochastic Search</label>
+        <label><input type="radio" name="q54" value="c"> c) Continuous Search</label>
+        <label><input type="radio" name="q54" value="d"> d) Deterministic Search</label>
+    </div>
+    <div class="answer-box" id="answer54" data-correct-answer="c) Continuous Search">Correct Answer: c) Continuous Search</div>
+</div>
+
+<!-- Question 55 -->
+<div class="question">
+    <h3>55. What component of a search problem is optional but helps find the "best" solution?</h3>
+    <div class="options">
+        <label><input type="radio" name="q55" value="a"> a) State Space</label>
+        <label><input type="radio" name="q55" value="b"> b) Path Cost</label>
+        <label><input type="radio" name="q55" value="c"> c) Actions</label>
+        <label><input type="radio" name="q55" value="d"> d) Goal State</label>
+    </div>
+    <div class="answer-box" id="answer55" data-correct-answer="b) Path Cost">Correct Answer: b) Path Cost</div>
+</div>
+
+<!-- Question 56 -->
+<div class="question">
+    <h3>56. Which type of search problem involves multiple potential goals?</h3>
+    <div class="options">
+        <label><input type="radio" name="q56" value="a"> a) Deterministic Search</label>
+        <label><input type="radio" name="q56" value="b"> b) Single-State Search</label>
+        <label><input type="radio" name="q56" value="c"> c) Multi-State Search</label>
+        <label><input type="radio" name="q56" value="d"> d) Continuous Search</label>
+    </div>
+    <div class="answer-box" id="answer56" data-correct-answer="c) Multi-State Search">Correct Answer: c) Multi-State Search</div>
+</div>
+
+<!-- Question 57 -->
+<div class="question">
+    <h3>57. The goal state in a search problem defines a successful solution.</h3>
+    <div class="options">
+        <label><input type="radio" name="q57" value="a"> a) True</label>
+        <label><input type="radio" name="q57" value="b"> b) False</label>
+    </div>
+    <div class="answer-box" id="answer57" data-correct-answer="a) True">Correct Answer: a) True</div>
+</div>
+
+<!-- Question 58 -->
+<div class="question">
+    <h3>58. Deterministic search problems always have predictable outcomes.</h3>
+    <div class="options">
+        <label><input type="radio" name="q58" value="a"> a) True</label>
+        <label><input type="radio" name="q58" value="b"> b) False</label>
+    </div>
+    <div class="answer-box" id="answer58" data-correct-answer="a) True">Correct Answer: a) True</div>
+</div>
+
+<!-- Question 59 -->
+<div class="question">
+    <h3>59. In multi-state search problems, there is only one clearly defined goal.</h3>
+    <div class="options">
+        <label><input type="radio" name="q59" value="a"> a) True</label>
+        <label><input type="radio" name="q59" value="b"> b) False</label>
+    </div>
+    <div class="answer-box" id="answer59" data-correct-answer="b) False">Correct Answer: b) False</div>
+</div>
+
+<!-- Question 60 -->
+<div class="question">
+    <h3>60. Optimization problems in search aim to find the best configuration.</h3>
+    <div class="options">
+        <label><input type="radio" name="q60" value="a"> a) True</label>
+        <label><input type="radio" name="q60" value="b"> b) False</label>
+    </div>
+    <div class="answer-box" id="answer60" data-correct-answer="a) True">Correct Answer: a) True</div>
+</div>
+
+<!-- Question 61 -->
+<div class="question">
+    <h3>61. Stochastic search problems involve outcomes that are always certain.</h3>
+    <div class="options">
+        <label><input type="radio" name="q61" value="a"> a) True</label>
+        <label><input type="radio" name="q61" value="b"> b) False</label>
+    </div>
+    <div class="answer-box" id="answer61" data-correct-answer="b) False">Correct Answer: b) False</div>
+</div>
+
+<!-- Question 62 -->
+<div class="question">
+    <h3>62. Continuous search problems deal with finite spaces like grids or graphs.</h3>
+    <div class="options">
+        <label><input type="radio" name="q62" value="a"> a) True</label>
+        <label><input type="radio" name="q62" value="b"> b) False</label>
+    </div>
+    <div class="answer-box" id="answer62" data-correct-answer="b) False">Correct Answer: b) False</div>
+</div>
+
+<!-- Question 63 -->
+<div class="question">
+    <h3>63. What distinguishes a search tree from a search graph?</h3>
+    <div class="options">
+        <label><input type="radio" name="q63" value="a"> a) Trees account for cycles; graphs do not</label>
+        <label><input type="radio" name="q63" value="b"> b) Graphs represent unique states; trees do not</label>
+        <label><input type="radio" name="q63" value="c"> c) Trees assume no repeated states; graphs account for cycles</label>
+        <label><input type="radio" name="q63" value="d"> d) Both are identical representations</label>
+    </div>
+    <div class="answer-box" id="answer63" data-correct-answer="c) Trees assume no repeated states; graphs account for cycles">Correct Answer: c) Trees assume no repeated states; graphs account for cycles</div>
+</div>
+
+<!-- Question 64 -->
+<div class="question">
+    <h3>64. Which search method does NOT use any additional information about the state space?</h3>
+    <div class="options">
+        <label><input type="radio" name="q64" value="a"> a) A* Algorithm</label>
+        <label><input type="radio" name="q64" value="b"> b) Greedy Best-First Search</label>
+        <label><input type="radio" name="q64" value="c"> c) Depth-First Search</label>
+        <label><input type="radio" name="q64" value="d"> d) Heuristic Search</label>
+    </div>
+    <div class="answer-box" id="answer64" data-correct-answer="c) Depth-First Search">Correct Answer: c) Depth-First Search</div>
+</div>
+
+<!-- Question 65 -->
+<div class="question">
+    <h3>65. What is an example of an informed search algorithm?</h3>
+    <div class="options">
+        <label><input type="radio" name="q65" value="a"> a) Breadth-First Search</label>
+        <label><input type="radio" name="q65" value="b"> b) Depth-First Search</label>
+        <label><input type="radio" name="q65" value="c"> c) Uniform-Cost Search</label>
+        <label><input type="radio" name="q65" value="d"> d) A* Algorithm</label>
+    </div>
+    <div class="answer-box" id="answer65" data-correct-answer="d) A* Algorithm">Correct Answer: d) A* Algorithm</div>
+</div>
+
+<!-- Question 66 -->
+<div class="question">
+    <h3>66. What does the "path cost" represent in a search problem?</h3>
+    <div class="options">
+        <label><input type="radio" name="q66" value="a"> a) The shortest distance to the goal</label>
+        <label><input type="radio" name="q66" value="b"> b) The numerical value of the total solution cost</label>
+        <label><input type="radio" name="q66" value="c"> c) The number of steps in the search process</label>
+        <label><input type="radio" name="q66" value="d"> d) The complexity of the algorithm</label>
+    </div>
+    <div class="answer-box" id="answer66" data-correct-answer="b) The numerical value of the total solution cost">Correct Answer: b) The numerical value of the total solution cost</div>
+</div>
+
+<!-- Question 67 -->
+<div class="question">
+    <h3>67. What is the evaluation function \( f(n) \) in a search algorithm?</h3>
+    <div class="options">
+        <label><input type="radio" name="q67" value="a"> a) Heuristic cost only</label>
+        <label><input type="radio" name="q67" value="b"> b) Path cost only</label>
+        <label><input type="radio" name="q67" value="c"> c) The sum of path cost and heuristic cost</label>
+        <label><input type="radio" name="q67" value="d"> d) The time complexity of the search</label>
+    </div>
+    <div class="answer-box" id="answer67" data-correct-answer="c) The sum of path cost and heuristic cost">Correct Answer: c) The sum of path cost and heuristic cost</div>
+</div>
+
+<!-- Question 68 -->
+<div class="question">
+    <h3>68. A search tree accounts for cycles and repeated states.</h3>
+    <div class="options">
+        <label><input type="radio" name="q68" value="a"> a) True</label>
+        <label><input type="radio" name="q68" value="b"> b) False</label>
+    </div>
+    <div class="answer-box" id="answer68" data-correct-answer="b) False">Correct Answer: b) False</div>
+</div>
+
+<!-- Question 69 -->
+<div class="question">
+    <h3>69. Heuristic search uses additional information to prioritize exploration.</h3>
+    <div class="options">
+        <label><input type="radio" name="q69" value="a"> a) True</label>
+        <label><input type="radio" name="q69" value="b"> b) False</label>
+    </div>
+    <div class="answer-box" id="answer69" data-correct-answer="a) True">Correct Answer: a) True</div>
+</div>
+
+<!-- Question 70 -->
+<div class="question">
+    <h3>70. Breadth-First Search (BFS) is an example of an informed search algorithm.</h3>
+    <div class="options">
+        <label><input type="radio" name="q70" value="a"> a) True</label>
+        <label><input type="radio" name="q70" value="b"> b) False</label>
+    </div>
+    <div class="answer-box" id="answer70" data-correct-answer="b) False">Correct Answer: b) False</div>
+</div>
+
+<!-- Question 71 -->
+<div class="question">
+    <h3>71. Path cost is essential in determining the best solution in weighted graphs.</h3>
+    <div class="options">
+        <label><input type="radio" name="q71" value="a"> a) True</label>
+        <label><input type="radio" name="q71" value="b"> b) False</label>
+    </div>
+    <div class="answer-box" id="answer71" data-correct-answer="a) True">Correct Answer: a) True</div>
+</div>
+
+<!-- Question 72 -->
+<div class="question">
+    <h3>72. Time constraints are a common challenge in real-time search applications.</h3>
+    <div class="options">
+        <label><input type="radio" name="q72" value="a"> a) True</label>
+        <label><input type="radio" name="q72" value="b"> b) False</label>
+    </div>
+    <div class="answer-box" id="answer72" data-correct-answer="a) True">Correct Answer: a) True</div>
+</div>
+
+<!-- Question 73 -->
+<div class="question">
+    <h3>73. Which of the following is NOT a type of search problem?</h3>
+    <div class="options">
+        <label><input type="radio" name="q73" value="a"> a) Single-State Problem</label>
+        <label><input type="radio" name="q73" value="b"> b) Multi-State Problem</label>
+        <label><input type="radio" name="q73" value="c"> c) Exact-State Problem</label>
+        <label><input type="radio" name="q73" value="d"> d) Optimization Problem</label>
+    </div>
+    <div class="answer-box" id="answer73" data-correct-answer="c) Exact-State Problem">Correct Answer: c) Exact-State Problem</div>
+</div>
+
+<!-- Question 74 -->
+<div class="question">
+    <h3>74. What does systematically exploring the state space in a search algorithm refer to?</h3>
+    <div class="options">
+        <label><input type="radio" name="q74" value="a"> a) Heuristics</label>
+        <label><input type="radio" name="q74" value="b"> b) Exploitation</label>
+        <label><input type="radio" name="q74" value="c"> c) Exploration</label>
+        <label><input type="radio" name="q74" value="d"> d) Optimization</label>
+    </div>
+    <div class="answer-box" id="answer74" data-correct-answer="c) Exploration">Correct Answer: c) Exploration</div>
+</div>
+
+<!-- Question 75 -->
+<div class="question">
+    <h3>75. What does leveraging heuristics to prioritize certain states in a search algorithm refer to?</h3>
+    <div class="options">
+        <label><input type="radio" name="q75" value="a"> a) Exploration</label>
+        <label><input type="radio" name="q75" value="b"> b) Exploitation</label>
+        <label><input type="radio" name="q75" value="c"> c) Pathfinding</label>
+        <label><input type="radio" name="q75" value="d"> d) Optimization</label>
+    </div>
+    <div class="answer-box" id="answer75" data-correct-answer="b) Exploitation">Correct Answer: b) Exploitation</div>
+</div>
+
+<!-- Question 76 -->
+<div class="question">
+    <h3>76. In the given example of cities (A, B, C, D) with specified distances, what is the problem being solved?</h3>
+    <div class="options">
+        <label><input type="radio" name="q76" value="a"> a) Shortest Path Problem</label>
+        <label><input type="radio" name="q76" value="b"> b) Minimum Spanning Tree</label>
+        <label><input type="radio" name="q76" value="c"> c) Traveling Salesman Problem (TSP)</label>
+        <label><input type="radio" name="q76" value="d"> d) Dijkstra’s Algorithm</label>
+    </div>
+    <div class="answer-box" id="answer76" data-correct-answer="c) Traveling Salesman Problem (TSP)">Correct Answer: c) Traveling Salesman Problem (TSP)</div>
+</div>
+
+<!-- Question 77 -->
+<div class="question">
+    <h3>77. What is the goal of the Traveling Salesman Problem (TSP)?</h3>
+    <div class="options">
+        <label><input type="radio" name="q77" value="a"> a) Visit all cities and return to the start with the shortest path</label>
+        <label><input type="radio" name="q77" value="b"> b) Visit only half the cities</label>
+        <label><input type="radio" name="q77" value="c"> c) Find the longest possible route</label>
+        <label><input type="radio" name="q77" value="d"> d) Skip some cities to save time</label>
+    </div>
+    <div class="answer-box" id="answer77" data-correct-answer="a) Visit all cities and return to the start with the shortest path">Correct Answer: a) Visit all cities and return to the start with the shortest path</div>
+</div>
+
+<!-- Question 78 -->
+<div class="question">
+    <h3>78. Search engines use AI to improve query results.</h3>
+    <div class="options">
+        <label><input type="radio" name="q78" value="a"> a) True</label>
+        <label><input type="radio" name="q78" value="b"> b) False</label>
+    </div>
+    <div class="answer-box" id="answer78" data-correct-answer="a) True">Correct Answer: a) True</div>
+</div>
+
+<!-- Question 79 -->
+<div class="question">
+    <h3>79. Crawling is the process of gathering data for a search engine.</h3>
+    <div class="options">
+        <label><input type="radio" name="q79" value="a"> a) True</label>
+        <label><input type="radio" name="q79" value="b"> b) False</label>
+    </div>
+    <div class="answer-box" id="answer79" data-correct-answer="a) True">Correct Answer: a) True</div>
+</div>
+
+<!-- Question 80 -->
+<div class="question">
+    <h3>80. Information retrieval works only with text data.</h3>
+    <div class="options">
+        <label><input type="radio" name="q80" value="a"> a) True</label>
+        <label><input type="radio" name="q80" value="b"> b) False</label>
+    </div>
+    <div class="answer-box" id="answer80" data-correct-answer="b) False">Correct Answer: b) False</div>
+</div>
+
+<!-- Question 81 -->
+<div class="question">
+    <h3>81. IR (Information Retrieval) is about theories, and search engines apply them.</h3>
+    <div class="options">
+        <label><input type="radio" name="q81" value="a"> a) True</label>
+        <label><input type="radio" name="q81" value="b"> b) False</label>
+    </div>
+    <div class="answer-box" id="answer81" data-correct-answer="a) True">Correct Answer: a) True</div>
+</div>
+
+    </div>
+
+    <footer>
+        <p>&copy; 2023 AI Quiz. All rights reserved.</p>
+    </footer>
+
+    <script>
+        function resetQuiz() {
+            const radioButtons = document.querySelectorAll('input[type="radio"]');
+            radioButtons.forEach(radio => radio.checked = false);
+
+            const answerBoxes = document.querySelectorAll('.answer-box');
+            answerBoxes.forEach(box => {
+                box.style.display = 'none';
+                box.classList.remove('correct', 'incorrect');
+                // Reset the text to the original correct answer
+                const correctAnswer = box.getAttribute('data-correct-answer');
+                if (correctAnswer) {
+                    box.textContent = `Correct Answer: ${correctAnswer}`;
+                }
+            });
+        }
+
+        function showAllAnswers() {
+            const answerBoxes = document.querySelectorAll('.answer-box');
+            answerBoxes.forEach(box => {
+                box.style.display = 'block';
+                box.classList.add('correct');
+                // Ensure the correct answer is displayed
+                const correctAnswer = box.getAttribute('data-correct-answer');
+                if (correctAnswer) {
+                    box.textContent = `Correct Answer: ${correctAnswer}`;
+                }
+            });
+        }
+
+        function hideAllAnswers() {
+            const answerBoxes = document.querySelectorAll('.answer-box');
+            answerBoxes.forEach(box => {
+                box.style.display = 'none';
+                box.classList.remove('correct', 'incorrect');
+            });
+        }
+
+        const radioButtons = document.querySelectorAll('input[type="radio"]');
+        radioButtons.forEach(radio => {
+            radio.addEventListener('change', (e) => {
+                const questionNumber = e.target.name.substring(1);
+                const answerBox = document.getElementById(`answer${questionNumber}`);
+                const correctAnswer = answerBox.getAttribute('data-correct-answer');
+                const userAnswer = e.target.value;
+
+                if (userAnswer === correctAnswer.split(") ")[0]) {
+                    answerBox.textContent = "Correct!";
+                    answerBox.classList.add('correct');
+                    answerBox.classList.remove('incorrect');
+                } else {
+                    answerBox.textContent = `Incorrect. Correct Answer: ${correctAnswer}`;
+                    answerBox.classList.add('incorrect');
+                    answerBox.classList.remove('correct');
+                }
+                answerBox.style.display = 'block';
+            });
+        });
+
+        // Store the correct answers in a data attribute for easy reset
+        const answerBoxes = document.querySelectorAll('.answer-box');
+        answerBoxes.forEach(box => {
+            const correctAnswer = box.textContent.split(": ")[1].trim();
+            box.setAttribute('data-correct-answer', correctAnswer);
+        });
+    </script>
+</body>
+</html>
